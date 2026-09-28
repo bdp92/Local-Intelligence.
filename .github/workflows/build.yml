@@ -1,15 +1,10 @@
-Maak op GitHub een nieuw bestand met EXACT deze naam:
-
-.github/workflows/build.yml
-
-Plak daarna ALLES hieronder in dat bestand:
-
 name: Build Local Intelligence
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 permissions:
   contents: write

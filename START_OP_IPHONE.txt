@@ -1,0 +1,30 @@
+IPHONE-UPLOADVERSIE
+
+1. Download deze ZIP op je iPhone.
+2. Open de Bestanden-app en tik op de ZIP om hem uit te pakken.
+3. Maak op github.com een PUBLIC repository: Local-Intelligence.
+4. Upload:
+   - project.yml
+   - de map LocalIntelligence
+   - GITHUB_WORKFLOW_COPY_THIS.txt
+
+5. Op GitHub kies:
+   Add file -> Create new file
+
+6. Vul als bestandsnaam EXACT in:
+   .github/workflows/build.yml
+
+7. Open GITHUB_WORKFLOW_COPY_THIS.txt in de Bestanden-app.
+8. Kopieer ALLES onder "Plak daarna ALLES hieronder in dat bestand:"
+9. Plak dat in GitHub.
+10. Tik Commit changes.
+
+11. Ga naar:
+    Actions -> Build Local Intelligence -> Run workflow
+
+12. Als de build groen is:
+    ga naar Releases -> nieuwste release -> LocalIntelligence.ipa
+
+13. Installeer die IPA daarna via SideStore.
+
+Deze versie is speciaal kleiner gemaakt zodat uploaden vanaf iPhone eenvoudiger is.

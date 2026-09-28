@@ -1,0 +1,31 @@
+name: LocalIntelligence
+options:
+  bundleIdPrefix: be.localintelligence
+  deploymentTarget:
+    iOS: "17.0"
+
+packages:
+  SwiftLlama:
+    url: https://github.com/pgorzelany/swift-llama-cpp
+    branch: main
+
+targets:
+  LocalIntelligence:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: LocalIntelligence
+    dependencies:
+      - package: SwiftLlama
+        product: SwiftLlama
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: be.localintelligence.LocalIntelligence
+        PRODUCT_NAME: Local Intelligence
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: LocalIntelligence/Info.plist

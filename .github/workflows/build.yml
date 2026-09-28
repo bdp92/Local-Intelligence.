@@ -1,0 +1,65 @@
+Maak op GitHub een nieuw bestand met EXACT deze naam:
+
+.github/workflows/build.yml
+
+Plak daarna ALLES hieronder in dat bestand:
+
+name: Build Local Intelligence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Resolve packages
+        run: |
+          xcodebuild \
+            -resolvePackageDependencies \
+            -project LocalIntelligence.xcodeproj \
+            -scheme LocalIntelligence
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project LocalIntelligence.xcodeproj \
+            -scheme LocalIntelligence \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+
+      - name: Package IPA
+        run: |
+          APP_PATH=$(find build/Build/Products/Release-iphoneos -maxdepth 1 -name "*.app" | head -n 1)
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/
+          zip -qry LocalIntelligence.ipa Payload
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" LocalIntelligence.ipa \
+            --title "Local Intelligence build ${GITHUB_RUN_NUMBER}" \
+            --notes "Automatische iPhone-build." \
+            --latest
